@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple to-do app</title>
+    <link href="/style.css" rel="stylesheet">
+</head>
+
+<body class="container">
+<div class="box">
+    <h2>Enter new task:</h2>
+    <form action="/add" method="post">
+        <label>
+            <input class="input" name="task" placeholder="New task" required type="text"/>
+        </label>
+        <button class="button-28" type="submit">Add task</button>
+    </form>
+    <br><br>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tasks</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task, n : ${tasks}">
+            <td th:text="${n.index + 1 + '.'}">1.</td>
+            <td th:text="${task.task}">Task...</td>
+            <td style="white-space: nowrap;">
+                <form action="/delete" method="post" style="display: inline-block; margin-right: 8px;">
+                    <input name="id" th:value="${task.id}" type="hidden"/>
+                    <button class="button-1" type="submit">Done!</button>
+                </form>
+                <form action="/delete" method="post" style="display: inline-block;">
+                    <input name="id" th:value="${task.id}" type="hidden"/>
+                    <button class="button-2" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${tasks.size() == 0}">
+            <td colspan="3" style="text-align: center;">Done for today!</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
